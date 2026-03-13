@@ -898,7 +898,7 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
             <option>Otro</option>
           </select>
         </div>
-        <button type="submit" class="form-btn" id="modal-submit-btn">Reservar mi lugar</button>
+        <button type="button" onclick="submitModal()" class="form-btn" id="modal-submit-btn">Reservar mi lugar</button>
         <p class="form-confirm" style="margin-top:0.8rem;">Te avisaremos cuando el programa abra inscripciones.</p>
       </form>
     </div>
@@ -996,38 +996,6 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
   </div>
 </div>
 
-<script>
-  const ADMIN_PASS = 'kolade2025';
-  let db = { encuentro: [], generacion: [], futuros: [] };
-  try { const s = localStorage.getItem('kolade_db'); if(s) db = JSON.parse(s); } catch(e) {}
-  function saveDB() { try { localStorage.setItem('kolade_db', JSON.stringify(db)); } catch(e) {} }
-
-  // Scroll reveal
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if(e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  // Nav scroll
-  window.addEventListener('scroll', () => {
-    document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Encuentro form
-  function submitEncuentro() {
-    const name = document.getElementById('enc-name').value.trim();
-    const email = document.getElementById('enc-email').value.trim();
-    if(!name || !email) { alert('Por favor escribe tu nombre y correo.'); return; }
-    db.encuentro.push({ id: Date.now(), fecha: new Date().toLocaleString('es-US'), nombre: name, correo: email, telefono: document.getElementById('enc-phone').value.trim(), experiencia: document.getElementById('enc-exp').value, fuente: document.getElementById('enc-source').value });
-    saveDB();
-    const btn = document.querySelector('#encuentro .form-btn');
-    btn.textContent = '¡Listo! Te confirmamos pronto.';
-    btn.style.background = '#1A5C2A';
-    btn.disabled = true;
-  }
-
   // Modal
   let modalType = '', modalGroup = '';
   const minors = ['4 a 7 años','8 a 11 años','12 a 15 años','16 a 17 años'];
@@ -1049,19 +1017,27 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
   function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
   document.getElementById('modal-overlay').addEventListener('click', function(e) { if(e.target === this) closeModal(); });
 
-  function submitModal() {
+function submitModal() {
     const name = document.getElementById('m-name').value.trim();
     const email = document.getElementById('m-email').value.trim();
     if(!name || !email) { alert('Por favor escribe tu nombre y correo.'); return; }
-    const record = { id: Date.now(), fecha: new Date().toLocaleString('es-US'), nombre: name + ' ' + document.getElementById('m-lastname').value.trim(), correo: email, telefono: document.getElementById('m-phone').value.trim(), grupo: modalGroup };
-    if(minors.includes(modalGroup)) { record.tutor = document.getElementById('m-guardian').value.trim(); record.correoTutor = document.getElementById('m-guardian-email').value.trim(); }
-    if(modalGroup === '¿Qué más quieres?') record.sugerencia = document.getElementById('m-suggestion').value.trim();
-    if(modalType === 'gen') db.generacion.push(record); else db.futuros.push(record);
-    saveDB();
-    document.getElementById('modal-form-content').style.display = 'none';
-    document.getElementById('modal-success').style.display = 'block';
-    setTimeout(closeModal, 3000);
+    const formData = new FormData();
+    formData.append('form-name', 'prematricula');
+    formData.append('nombre', name);
+    formData.append('apellido', document.getElementById('m-lastname').value.trim());
+    formData.append('email', email);
+    formData.append('telefono', document.getElementById('m-phone').value.trim());
+    formData.append('especialidad', document.getElementById('m-especialidad').value);
+    formData.append('grupo', modalGroup);
+    fetch('/', { method: 'POST', body: formData })
+      .then(() => {
+        document.getElementById('modal-form-content').style.display = 'none';
+        document.getElementById('modal-success').style.display = 'block';
+        setTimeout(closeModal, 3000);
+      })
+      .catch(() => alert('Hubo un error. Por favor intenta de nuevo.'));
   }
+
 
   // Admin
   function openAdminLogin() {
