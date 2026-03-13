@@ -875,39 +875,39 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
 </section>
 
 <!-- MODAL -->
-
-<form class="modal-overlay" id="modal-overlay" name="prematricula" method="POST" data-netlify="true">
+<div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕ Cerrar</button>
     <div id="modal-form-content">
-  <h3 class="modal-title" id="modal-title">¿Qué más quieres?</h3>
-  <p class="modal-sub" id="modal-sub">Futuros Artistas — Otro</p>
-  <div class="form-group"><label class="form-label">Nombre</label><input type="text" id="m-name" name="nombre" class="form-input" placeholder="Tu nombre"></div>
-  <div class="form-group"><label class="form-label">Apellido</label><input type="text" id="m-lastname" name="apellido" class="form-input" placeholder="Tu apellido"></div>
-  <div class="form-group"><label class="form-label">Correo electrónico</label><input type="email" id="m-email" name="email" class="form-input" placeholder="tu@correo.com"></div>
-  <div class="form-group"><label class="form-label">Teléfono</label><input type="tel" id="m-phone" name="telefono" class="form-input" placeholder="+1 (000) 000-0000"></div>
-  <div class="form-group"><label class="form-label">Especialidad de interés</label>
-    <select id="m-especialidad" name="especialidad" class="form-select">
-      <option value="">Selecciona una opción</option>
-      <option>Actuación</option>
-      <option>Baile</option>
-      <option>Canto</option>
-      <option>Modelaje</option>
-      <option>Pintura</option>
-      <option>Fotografía</option>
-      <option>Otro</option>
-    </select>
-  </div>
-  <button class="form-btn" id="modal-submit-btn" onclick="submitModal()">Reservar mi lugar</button>
-  <p class="form-confirm" style="margin-top:0.8rem;">Te avisaremos cuando el programa abra inscripciones.</p>
-</div>
-
+      <form name="prematricula" method="POST" data-netlify="true">
+        <h3 class="modal-title" id="modal-title">¿Qué más quieres?</h3>
+        <p class="modal-sub" id="modal-sub">Futuros Artistas — Otro</p>
+        <div class="form-group"><label class="form-label">Nombre</label><input type="text" id="m-name" name="nombre" class="form-input" placeholder="Tu nombre"></div>
+        <div class="form-group"><label class="form-label">Apellido</label><input type="text" id="m-lastname" name="apellido" class="form-input" placeholder="Tu apellido"></div>
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input type="email" id="m-email" name="email" class="form-input" placeholder="tu@correo.com"></div>
+        <div class="form-group"><label class="form-label">Teléfono</label><input type="tel" id="m-phone" name="telefono" class="form-input" placeholder="+1 (000) 000-0000"></div>
+        <div class="form-group"><label class="form-label">Especialidad de interés</label>
+          <select id="m-especialidad" name="especialidad" class="form-select">
+            <option value="">Selecciona una opción</option>
+            <option>Actuación</option>
+            <option>Baile</option>
+            <option>Canto</option>
+            <option>Modelaje</option>
+            <option>Pintura</option>
+            <option>Fotografía</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <button type="submit" class="form-btn" id="modal-submit-btn">Reservar mi lugar</button>
+        <p class="form-confirm" style="margin-top:0.8rem;">Te avisaremos cuando el programa abra inscripciones.</p>
+      </form>
+    </div>
     <div class="modal-success" id="modal-success">
       <div class="check">✦</div>
       <p>Tu prematrícula fue registrada.<br>Serás de los primeros en saber cuando abramos.<br><em>Bienvenido a Kolade Arts.</em></p>
     </div>
   </div>
-</form>
+</div>
 
 <!-- FOOTER -->
 
