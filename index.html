@@ -1040,8 +1040,8 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
     document.getElementById('modal-form-content').style.display = 'block';
     ['m-name','m-lastname','m-email','m-phone'].forEach(id => document.getElementById(id).value = '');
     if(document.getElementById('modal-consent')) document.getElementById('modal-consent').style.display = minors.includes(group) ? 'block' : 'none';
-    document.getElementById('m-especialidad').parentElement.style.display = group === '¿Qué más quieres?' ? 'block' : 'none';
-    document.getElementById('modal-submit-btn').textContent = group === '¿Qué más quieres?' ? 'Enviar sugerencia' : 'Reservar mi lugar';
+    document.getElementById('m-especialidad').parentElement.style.display = group === 'Otro' ? 'block' : 'none';
+    document.getElementById('modal-submit-btn').textContent = group === 'Otro' ? 'Enviar sugerencia' : 'Reservar mi lugar';
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -1055,7 +1055,7 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
     if(!name || !email) { alert('Por favor escribe tu nombre y correo.'); return; }
     const record = { id: Date.now(), fecha: new Date().toLocaleString('es-US'), nombre: name + ' ' + document.getElementById('m-lastname').value.trim(), correo: email, telefono: document.getElementById('m-phone').value.trim(), grupo: modalGroup };
     if(minors.includes(modalGroup)) { record.tutor = document.getElementById('m-guardian').value.trim(); record.correoTutor = document.getElementById('m-guardian-email').value.trim(); }
-    if(modalGroup === '¿Qué más quieres?') record.sugerencia = document.getElementById('m-suggestion').value.trim();
+    if(modalGroup === 'Otro') record.sugerencia = document.getElementById('m-suggestion').value.trim();
     if(modalType === 'gen') db.generacion.push(record); else db.futuros.push(record);
     saveDB();
     document.getElementById('modal-form-content').style.display = 'none';
