@@ -1039,7 +1039,7 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
     document.getElementById('modal-success').style.display = 'none';
     document.getElementById('modal-form-content').style.display = 'block';
     ['m-name','m-lastname','m-email','m-phone'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('modal-consent').style.display = minors.includes(group) ? 'block' : 'none';
+    if(document.getElementById('modal-consent')) document.getElementById('modal-consent').style.display = minors.includes(group) ? 'block' : 'none';
     document.getElementById('m-especialidad').style.display = 'block';
     document.getElementById('modal-submit-btn').textContent = group === '¿Qué más quieres?' ? 'Enviar sugerencia' : 'Reservar mi lugar';
     document.getElementById('modal-overlay').classList.add('open');
