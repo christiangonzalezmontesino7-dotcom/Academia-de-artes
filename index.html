@@ -889,12 +889,12 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
         <div class="form-group"><label class="form-label">Especialidad de interés</label>
           <select id="m-especialidad" name="especialidad" class="form-select">
             <option value="">Selecciona una opción</option>
-            <option>Actuación</option>
-            <option>Baile</option>
-            <option>Canto</option>
-            <option>Modelaje</option>
             <option>Pintura</option>
-            <option>Fotografía</option>
+            <option>Fotografia</option>
+            <option>Direccion Artistica</option>
+            <option>Escenografia</option>
+            <option>Literatura</option>
+            <option>Instrumentos musicales</option>
             <option>Otro</option>
           </select>
         </div>
@@ -1040,7 +1040,7 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
     document.getElementById('modal-form-content').style.display = 'block';
     ['m-name','m-lastname','m-email','m-phone'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('modal-consent').style.display = minors.includes(group) ? 'block' : 'none';
-    document.getElementById('modal-suggestion').style.display = group === '¿Qué más quieres?' ? 'block' : 'none';
+    document.getElementById('m-especialidad').style.display = 'block';
     document.getElementById('modal-submit-btn').textContent = group === '¿Qué más quieres?' ? 'Enviar sugerencia' : 'Reservar mi lugar';
     document.getElementById('modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
