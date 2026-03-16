@@ -2,6 +2,8 @@
 
 <html lang="es">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('UGe3KT_wnQrUDP4HR');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kolade Arts — Primera Generación 2026</title>
@@ -1078,6 +1080,14 @@ function submitModal() {
     body: params.toString()
   })
   .then(() => {
+    emailjs.send('service_6ui2ljs', 'template_mqevx8u', {
+      nombre: name,
+      apellido: document.getElementById('m-lastname').value.trim(),
+      email: email,
+      telefono: document.getElementById('m-phone').value.trim(),
+      especialidad: document.getElementById('m-especialidad') ? document.getElementById('m-especialidad').value : '',
+      grupo: modalGroup
+    });
     document.getElementById('modal-form-content').style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
     setTimeout(closeModal, 3000);
