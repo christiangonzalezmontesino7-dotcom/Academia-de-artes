@@ -468,6 +468,15 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
   </style>
 </head>
 <body>
+  <form name="prematricula" netlify hidden>
+  <input type="text" name="nombre">
+  <input type="text" name="apellido">
+  <input type="email" name="email">
+  <input type="tel" name="telefono">
+  <select name="especialidad"></select>
+  <input type="text" name="grupo">
+</form>
+
 
 <!-- NAV -->
 
@@ -1050,26 +1059,31 @@ body::before{content:””;position:fixed;inset:0;background-image:url(“data:
   document.getElementById('modal-overlay').addEventListener('click', function(e) { if(e.target === this) closeModal(); });
 
 function submitModal() {
-    const name = document.getElementById('m-name').value.trim();
-    const email = document.getElementById('m-email').value.trim();
-    if(!name || !email) { alert('Por favor escribe tu nombre y correo.'); return; }
-    const formData = new FormData();
-    formData.append('form-name', 'prematricula');
-    formData.append('nombre', name);
-    formData.append('apellido', document.getElementById('m-lastname').value.trim());
-    formData.append('email', email);
-    formData.append('telefono', document.getElementById('m-phone').value.trim());
-    formData.append('especialidad', document.getElementById('m-especialidad') ? document.getElementById('m-especialidad').value : '');
-    formData.append('grupo', modalGroup);
-    fetch('/', { method: 'POST', body: formData })
-      .then(() => {
-        document.getElementById('modal-form-content').style.display = 'none';
-        document.getElementById('modal-success').style.display = 'block';
-        setTimeout(closeModal, 3000);
-      })
-      .catch(() => alert('Hubo un error. Por favor intenta de nuevo.'));
-  }
+  const name = document.getElementById('m-name').value.trim();
+  const email = document.getElementById('m-email').value.trim();
+  if(!name || !email) { alert('Por favor escribe tu nombre y correo.'); return; }
 
+  const params = new URLSearchParams();
+  params.append('form-name', 'prematricula');
+  params.append('nombre', name);
+  params.append('apellido', document.getElementById('m-lastname').value.trim());
+  params.append('email', email);
+  params.append('telefono', document.getElementById('m-phone').value.trim());
+  params.append('especialidad', document.getElementById('m-especialidad') ? document.getElementById('m-especialidad').value : '');
+  params.append('grupo', modalGroup);
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+  })
+  .then(() => {
+    document.getElementById('modal-form-content').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+    setTimeout(closeModal, 3000);
+  })
+  .catch(() => alert('Hubo un error. Por favor intenta de nuevo.'));
+}
 
   // Admin
   function openAdminLogin() {
